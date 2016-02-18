@@ -7,7 +7,20 @@ class Chunk {
     bool sfdirty;
     position2d<s32> pos;
     Chunk (position2d<s32> p) {
-        for (int i = 0; i < CHSIZE*CHSIZE; i++) blocks[i] = p.Y > 0;
+        for (int i = 0; i < CHSIZE*CHSIZE; i++) {
+            if (p.Y < 0){
+                blocks[i] = BLOCK_AIR;
+                continue;
+            }
+            if (p.Y == 0){
+                blocks[i] = BLOCK_DIRT;
+                continue;
+            }
+            if (p.Y > 0){
+                blocks[i] = BLOCK_STONE;
+                continue;
+            }
+        }
         sf = NULL;
         pos = p;
         sfdirty = true;

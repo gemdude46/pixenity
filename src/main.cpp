@@ -21,7 +21,7 @@ using namespace std;
 int menu = GAME;
 
 const SColor WHITE = SColor(255, 255, 255, 255);
-const SColor BLACK = SColor(0  , 0  , 0  , 0);
+const SColor BLACK = SColor(255, 0  , 0  , 0);
 
 inline int pmod(int a, int b)
 { return (a%b+b)%b; }
@@ -64,7 +64,10 @@ int main(){
             world.tick();
             world.blit(device);
         }
-        //device->getVideoDriver()->draw2Drectangle(BLACK,rect<s32>(0,0,1000,ofs.Y
+        device->getVideoDriver()->draw2DRectangle(BLACK,rect<s32>(0,0,1001+2*ofs.X,ofs.Y));
+        device->getVideoDriver()->draw2DRectangle(BLACK,rect<s32>(0,ofs.Y+666,1001+2*ofs.X,ofs.Y*2+667));
+        device->getVideoDriver()->draw2DRectangle(BLACK,rect<s32>(0,ofs.Y,ofs.X,ofs.Y+666));
+        device->getVideoDriver()->draw2DRectangle(BLACK,rect<s32>(ofs.X+1000,ofs.Y,1001+2*ofs.X,ofs.Y+666));
         device->getVideoDriver()->endScene();
     }
     return 0;
