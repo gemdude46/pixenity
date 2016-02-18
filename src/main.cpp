@@ -21,6 +21,21 @@ using namespace std;
 int menu = GAME;
 
 const SColor WHITE = SColor(255, 255, 255, 255);
+const SColor BLACK = SColor(0  , 0  , 0  , 0);
+
+inline int pmod(int a, int b)
+{ return (a%b+b)%b; }
+
+inline int pdiv(int a, int b)
+{ return (a-(a<0?b-1:0))/b; }
+
+inline position2d<s32> D2P(dimension2d<s32> d)
+{ return position2d<s32>(d.Width, d.Height); }
+
+inline position2d<s32> uD2P(dimension2d<u32> d)
+{ return position2d<s32>(d.Width, d.Height); }
+
+position2d<s32> ofs;
 
 IrrlichtDevice *device;
 
@@ -43,11 +58,13 @@ int main(){
     
     
     while (device->run()){
+        ofs = uD2P(device->getVideoDriver()->getScreenSize() / 2) - position2d<s32>(500,333);
         device->getVideoDriver()->beginScene(true, false, video::SColor(255,0,0,0));
         if (menu==GAME){
             world.tick();
-            world.blit();
+            world.blit(device);
         }
+        //device->getVideoDriver()->draw2Drectangle(BLACK,rect<s32>(0,0,1000,ofs.Y
         device->getVideoDriver()->endScene();
     }
     return 0;

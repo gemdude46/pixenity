@@ -4,11 +4,13 @@ class Chunk {
     public:
     int blocks[CHSIZE*CHSIZE];
     ITexture* sf;
-    vector3d<s32> pos;
-    Chunk (vector3d<s32> p) {
+    bool sfdirty;
+    position2d<s32> pos;
+    Chunk (position2d<s32> p) {
         for (int i = 0; i < CHSIZE*CHSIZE; i++) blocks[i] = p.Y > 0;
         sf = NULL;
         pos = p;
+        sfdirty = true;
     }
     void updateSF(IrrlichtDevice*);
 };
@@ -29,4 +31,5 @@ void Chunk::updateSF(IrrlichtDevice* device){
     this->sf = device->getVideoDriver()->addTexture("chunkSF",I);
     this->sf->grab();
     I->drop();
+    this->sfdirty = false;
 }
