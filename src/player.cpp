@@ -8,7 +8,7 @@ class Player {
         return vector2d<s32>(pdiv(getIPos().X,CHSIZE),pdiv(getIPos().Y,CHSIZE));
     }
     Player(){
-        pos = vector2df();
+        pos = vector2df(0,-8);
         vel = vector2df();
     }
 };

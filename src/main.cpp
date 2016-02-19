@@ -1,6 +1,7 @@
 #include <irrlicht.h>
 #include <algorithm>
 #include <iostream>
+#include <queue>
 
 using namespace irr;
 using namespace core;
@@ -50,7 +51,7 @@ ITexture* I2T(video::IImage* image, core::stringc name) {
 World world;
 
 int main(){
-    INITBLOCKCOLORS();
+    INITBLOCKS();
 
     device = createDevice(EDT_OPENGL, core::dimension2d<u32>(1000,666));
     
