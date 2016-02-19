@@ -1,4 +1,4 @@
-#define CHSIZE 128
+#define CHSIZE                                                               128
 
 class Chunk {
     public:
@@ -6,26 +6,17 @@ class Chunk {
     ITexture* sf;
     bool sfdirty;
     position2d<s32> pos;
-    Chunk (position2d<s32> p) {
-        for (int i = 0; i < CHSIZE*CHSIZE; i++) {
-            if (p.Y < 0){
-                blocks[i] = BLOCK_AIR;
-                continue;
-            }
-            if (p.Y == 0){
-                blocks[i] = BLOCK_DIRT;
-                continue;
-            }
-            if (p.Y > 0){
-                blocks[i] = BLOCK_STONE;
-                continue;
-            }
-        }
+    World* world;
+    Chunk (position2d<s32> p, World* w) {
+        world=w;
         sf = NULL;
         pos = p;
         sfdirty = true;
+        GEN();
     }
     void updateSF(IrrlichtDevice*);
+    void GEN();
+    void clean(){sf->drop();}
 };
 
 void Chunk::updateSF(IrrlichtDevice* device){

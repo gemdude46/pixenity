@@ -1,6 +1,7 @@
 class Player {
     public:
     vector2df pos, vel;
+    bool noclip;
     vector2d<s32> getIPos(){
         return vector2d<s32>((s32)pos.X,(s32)pos.Y);
     }
@@ -10,5 +11,7 @@ class Player {
     Player(){
         pos = vector2df(0,-8);
         vel = vector2df();
+        noclip = true;
     }
+    void tick();
 };

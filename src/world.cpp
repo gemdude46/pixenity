@@ -5,8 +5,10 @@ class World {
     vector<Chunk*> chunks;
     queue<vector2d<s32>> blockupdates;
     Player player;
+    int seed;
     World(){
         player = Player();
+        seed = time(NULL);
     }
     
     int  getBlockAt(vector2d<s32>);
@@ -15,10 +17,7 @@ class World {
     void setBlockAtForce(vector2d<s32>,int);
     void tick();
     void blit(IrrlichtDevice*);
-    void genChunkAt(vector2d<s32> p, bool update = true){
-        chunks.push_back(new Chunk(p));
-        if (update) for(s32 i = 0; i < CHSIZE; i++) for(s32 j = 0; j < CHSIZE; j++) blockupdates.push(vector2d<s32>(i,j)+(p*16));
-    }
+    void genChunkAt(vector2d<s32> p, bool update = true);
     Chunk* getChunkAt(vector2d<s32> p){
         for (int i = 0; i < chunks.size(); i++) if(chunks[i]->pos == p) return chunks[i]; return NULL;
     }
@@ -37,6 +36,11 @@ class World {
         return false;
     }
 };
+
+void World::genChunkAt(vector2d<s32> p, bool update){
+    this->chunks.push_back(new Chunk(p, this));
+    if (update) for(s32 i = 0; i < CHSIZE; i++) for(s32 j = 0; j < CHSIZE; j++) this->blockupdates.push(vector2d<s32>(i,j)+(p*16));
+}
 
 int World::getBlockAt(vector2d<s32> p){
     Chunk* c = this->getChunkAt(vector2d<s32>(pdiv(p.X,CHSIZE),pdiv(p.Y,CHSIZE)));
@@ -65,9 +69,10 @@ void World::setBlockAtForce(vector2d<s32> p, int n){
 }
 
 void World::tick(){
-    
-    if (this->blockupdates.size()>MAXTICKS)
-    clog << "Too many updates! (" << this->blockupdates.size() << '/' << MAXTICKS << ") Was some terrain generated?" << endl;
+    if (this->blockupdates.size()>MAXTICKS){
+        logtime();
+        clog << "Too many updates! (" << this->blockupdates.size() << '/' << MAXTICKS << ") Was some terrain generated?" << endl;
+    }
     
     for (int i = 0; i < MAXTICKS && ! this->blockupdates.empty(); i++){
         vector2d<s32> bl = this->blockupdates.front();
@@ -79,6 +84,8 @@ void World::tick(){
         }
         this->blockupdates.pop();
     }
+    
+    this->player.tick();
     
     vector2d<s32> cp = this->player.getChunkPos();
     requireChunkAt(cp+vector2d<s32>(-1,-1)); requireChunkAt(cp+vector2d<s32>(0,-1)); requireChunkAt(cp+vector2d<s32>(1,-1));
