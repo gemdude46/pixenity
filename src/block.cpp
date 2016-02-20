@@ -12,7 +12,8 @@ struct Block {
 #define BLOCK_STONE                                                            1
 #define BLOCK_DIRT                                                             2
 #define BLOCK_SAND                                                             3
-#define BLOCK_COAL                                                             4
+#define BLOCK_COAL                                                             6
+#define BLOCK_GOLD                                                            79
 
 Block BLOCKS[256];
 void INITBLOCKS(){
@@ -21,6 +22,7 @@ void INITBLOCKS(){
     BLOCKS[BLOCK_DIRT]                   = Block(SColor(255,120,72,0),true);
     BLOCKS[BLOCK_SAND]                   = Block(SColor(255,194,178,128),true);
     BLOCKS[BLOCK_COAL]                   = Block(SColor(255,10,10,10),true);
+    BLOCKS[BLOCK_GOLD]                   = Block(SColor(255,212,175,55),true);
     
     BLOCKS[BLOCK_ERROR]                  = Block(SColor(255,255,0,0),true);
 }
