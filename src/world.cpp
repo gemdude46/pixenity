@@ -6,11 +6,12 @@ class World {
     queue<vector2d<s32>> blockupdates;
     Player player;
     int seed;
+    float gravity;
     World(){
         player = Player();
         seed = time(NULL);
+        gravity = 0.02044;
     }
-    
     int  getBlockAt(vector2d<s32>);
     int  getBlockAtForce(vector2d<s32>);
     void setBlockAt(vector2d<s32>,int);
@@ -85,7 +86,7 @@ void World::tick(){
         this->blockupdates.pop();
     }
     
-    this->player.tick();
+    this->player.tick(this);
     
     vector2d<s32> cp = this->player.getChunkPos();
     requireChunkAt(cp+vector2d<s32>(-1,-1)); requireChunkAt(cp+vector2d<s32>(0,-1)); requireChunkAt(cp+vector2d<s32>(1,-1));

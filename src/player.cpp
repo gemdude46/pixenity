@@ -9,9 +9,9 @@ class Player {
         return vector2d<s32>(pdiv(getIPos().X,CHSIZE),pdiv(getIPos().Y,CHSIZE));
     }
     Player(){
-        pos = vector2df(0,-8);
+        pos = vector2df(0,-16);
         vel = vector2df();
-        noclip = true;
+        noclip = false;
     }
-    void tick();
+    void tick(World*);
 };
