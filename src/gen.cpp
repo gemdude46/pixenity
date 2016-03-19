@@ -7,10 +7,10 @@
 #define COAL_ORE_DEPTH                                                         0 
 #define COAL_ORE_OFFSET                                                        6
 
-#define GOLD_ORE_FREQ                                                       12.1
-#define GOLD_ORE_DENSITY                                                    -0.5
-#define GOLD_ORE_DEPTH                                                      1000
-#define GOLD_ORE_OFFSET                                                       79
+#define GOLD_NGT_FREQ                                                       12.1
+#define GOLD_NGT_DENSITY                                                    -0.5
+#define GOLD_NGT_DEPTH                                                      1000
+#define GOLD_NGT_OFFSET                                                       79
 
 void Chunk::GEN(){
     int hm[CHSIZE];
@@ -31,12 +31,12 @@ void Chunk::GEN(){
                 (this->pos.Y*CHSIZE+(i/CHSIZE))/COAL_ORE_FREQ
             ) > 1-COAL_ORE_DENSITY) this->blocks[i] = BLOCK_COAL;
             
-            else if (this->pos.Y*CHSIZE >= GOLD_ORE_DEPTH &&
+            else if (this->pos.Y*CHSIZE >= GOLD_NGT_DEPTH &&
             noiseGen.GetValue(
-                (this->pos.X*CHSIZE+(i%CHSIZE))/GOLD_ORE_FREQ,
-                GOLD_ORE_OFFSET+0.5,
-                (this->pos.Y*CHSIZE+(i/CHSIZE))/GOLD_ORE_FREQ
-            ) > 1-GOLD_ORE_DENSITY) this->blocks[i] = BLOCK_GOLD;
+                (this->pos.X*CHSIZE+(i%CHSIZE))/GOLD_NGT_FREQ,
+                GOLD_NGT_OFFSET+0.5,
+                (this->pos.Y*CHSIZE+(i/CHSIZE))/GOLD_NGT_FREQ
+            ) > 1-GOLD_NGT_DENSITY) this->blocks[i] = BLOCK_GOLD;
             
             else this->blocks[i] = BLOCK_STONE;
         }

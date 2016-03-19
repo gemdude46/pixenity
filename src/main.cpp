@@ -4,6 +4,7 @@
 #include <vector>
 #include <time.h>
 #include <queue>
+#include <stack>
 #include <libnoise/noise.h>
 #include <string.h>
 
@@ -30,6 +31,8 @@ module::Perlin noiseGen;
 
 const SColor WHITE = SColor(255, 255, 255, 255);
 const SColor BLACK = SColor(255, 0  , 0  , 0);
+
+position2d<s32> mpos;
 
 inline int pmod(int a, int b)
 { return (a%b+b)%b; }
@@ -122,6 +125,7 @@ int main(){
     while (device->run()){
         ofs = uD2P(device->getVideoDriver()->getScreenSize() / 2) - position2d<s32>(500,333);
         device->getVideoDriver()->beginScene(true, false, video::SColor(255,0,0,0));
+        mpos = device->getCursorControl()->getPosition() - ofs;
         if (menu==GAME){
             world.tick();
             world.blit(device);

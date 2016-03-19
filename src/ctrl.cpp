@@ -78,4 +78,21 @@ void Player::tick(World* world){
         if (rsol && this->vel.X > 0) this->vel.X = 0;
     }
     this->pos+=this->vel;
+    
+    vector2d<s32> cp = this->getIPos() + ((mpos - position2d<s32>(500,333)) / 4);
+    stack<vector2d<s32>> pss;
+    switch (this->brush) {
+        case BRUSH_PX:
+            pss.emplace();
+        break;
+        
+        case BRUSH_CIRCLE:
+            for (s32 i = -4; i < 4; i++) for (s32 j = -4; j < 4; j++) if (i*i+j*j<17) pss.emplace(i,j);
+        break;
+    }
+    
+    while(!pss.empty()){
+        if (EVTRR->LB && world->getBlockAt(pss.top()+cp) != BLOCK_AIR) world->setBlockAt(pss.top()+cp,BLOCK_AIR);
+        pss.pop();
+    }
 }
